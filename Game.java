@@ -1,18 +1,8 @@
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
- * 
- *  To play this game, create an instance of this class and call the "play"
- *  method.
- * 
- *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
- * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.10
+ *  This is the main class in our text adventure. I will add more elements to
+ *  our game and hopefully make it more interesting.
+ * @author  Connor Richardson
+ * @version 2017.11.13
  */
 
 public class Game 
@@ -118,6 +108,10 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
+            case LOOK:
+                look();
+                break;
         }
         return wantToQuit;
     }
@@ -137,7 +131,16 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
+    
+    /**
+    *  This allows the player to look around the room and recieve the long
+    *  description over again.
+    */
+    private void look()
+    {
+     System.out.println(currentRoom.getLongDescription());   
+    }
+    
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
