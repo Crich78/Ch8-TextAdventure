@@ -112,6 +112,10 @@ public class Game
             case LOOK:
                 look();
                 break;
+                
+            case RELAX:
+                relax();
+                break;
         }
         return wantToQuit;
     }
@@ -139,6 +143,14 @@ public class Game
     private void look()
     {
      System.out.println(currentRoom.getLongDescription());   
+    }
+    
+    /**
+     * This allows the player to enjoy nature for a little while.
+     */
+    private void relax()
+    {
+        System.out.println("You take a few deep breaths and really notice the beauty of the environment around you.");
     }
     
     /** 
