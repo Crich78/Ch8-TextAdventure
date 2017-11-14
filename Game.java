@@ -10,6 +10,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Room lastRoom;
+    private Room cliff;
     private Stack multiLastRooms = new Stack(); // Used a stack to remember which rooms I was in and go back in a LIFO order.
         
     /**
@@ -26,30 +27,76 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
+        Room a1, a2, a3, b1, b2, b3, c1, c2, c3, bridge, outskirts, win;
+       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        a1= new Room("see a strong river flowing south to the west. The trees seem to be letting up a little to the north.");
+        a2 = new Room(" are still in a very dense forest. Maybe the trees are clearing up the the north?");
+        a3 = new Room("see a 30 foot cliff looming over the forest to the east. No way you could climb that. Every other direction is full of trees.");
+        b1 = new Room("see a strong river flowing to the west. Heavily wooded areas are in all other directions.");
+        b2 = new Room("see only trees around you.");
+        b3 = new Room("see a 30 foot cliff to the east. There might be one spot that is climbable. Trees surround you every other way.");
+        c1 = new Room(" see the river cuts east here, but there seems to be a small wooden bridge to the south over it. The trees are less the direction that the river flows.");
+        c2 = new Room("are on a peaceful riverbank. If you weren't lost, this might be a nice spot for a picnic.");
+        c3 = new Room("see a 30 foot cliff to your east and a strong flowing river to the south. Your options are definitely limited.");
+        outskirts = new Room("make your way out of the trees and find yourself in an open field.");
+        cliff = new Room("managed to climb up the rocks to the top of the cliff. Going down, doesn't look as easy. You have to almost be out though now!");
+        bridge = new Room("cross the bridge and find a small trail heading south!");
+        win = new Room(" manage to spot a road not too far off! Congratulations on finding your way out of the woods! Have a safe ride home! Thanks for playing! :)");
         
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
-
-        theater.setExit("west", outside);
-
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        a1.setExit("north", outskirts);
+        a1.setExit("east", a2);
+        a1.setExit("south", b1);
+        
+        a2.setExit("east", a3);
+        a2.setExit("west", a1);
+        a2.setExit("south", b2);
+        a2.setExit("north", outskirts);
+        
+        a3.setExit("north", outskirts);
+        a3.setExit("west", a2);
+        a3.setExit("south", b3);
+        
+        b1.setExit("north", a1);
+        b1.setExit("east", b2);
+        b1.setExit("south", c1);
+        
+        b2.setExit("east", b3);
+        b2.setExit("west", b1);
+        b2.setExit("south", c2);
+        b2.setExit("north", a2);
+        
+        b3.setExit("north", a3);
+        b3.setExit("west", b2);
+        b3.setExit("south", c3);
+        b3.setExit("up", cliff);
+        
+        c1.setExit("north", b1);
+        c1.setExit("east", c2);
+        c1.setExit("south" , bridge);
+        
+        c2.setExit("east", c3);
+        c2.setExit("west", c1);
+        c2.setExit("north", b2);
+        
+        c3.setExit("west", c2);
+        c3.setExit("north", b3);
+        
+        outskirts.setExit("north", win);
+        outskirts.setExit("east", a3);
+        outskirts.setExit("west", a1);
+        outskirts.setExit("south", a2);
+        
+        cliff.setExit("north", outskirts);
+        cliff.setExit("east", win);
+        
+        bridge.setExit("north", c1);
+        bridge.setExit("south", win);
+        
+        
+       
+        currentRoom = b2;  // start game outside
     }
 
     /**
@@ -207,6 +254,10 @@ public class Game
      */
     private void back()
     {
+        if (currentRoom == cliff)
+        {System.out.println("No way you can get back down.");
+        }
+        else{
         if (multiLastRooms.empty())
         {
             System.out.println("Well you wouldn't be lost if you could remember where you were before this...");
@@ -218,7 +269,10 @@ public class Game
             System.out.println("You retrace your foot steps and find your way back to where you were earlier.");
             System.out.println(currentRoom.getLongDescription());
         }
+    
+    
     }
+}
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
