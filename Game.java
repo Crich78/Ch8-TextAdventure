@@ -250,7 +250,9 @@ public class Game
     
    
     /**
-     * Added this method that uses a stack 
+     * Added this method that uses a stack to remember which rooms you have been in, and it orders it for easy LIFO access.
+     * Also added an if statement so that you can climb up the cliff, but can't get back down the way you came. This meant nullifying the back method for that.
+     * It gives you an error statement if you try
      */
     private void back()
     {
