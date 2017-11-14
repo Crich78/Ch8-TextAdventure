@@ -4,11 +4,13 @@
  * @author  Connor Richardson
  * @version 2017.11.13
  */
-
+import java.util.Stack; //Needed to import to add the method that allows you to go back multiple rooms
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
+    private Room lastRoom;
+    private Stack multiLastRooms = new Stack(); // Used a stack to remember which rooms I was in and go back in a LIFO order.
         
     /**
      * Create the game and initialise its internal map.
@@ -116,6 +118,10 @@ public class Game
             case RELAX:
                 relax();
                 break;
+                
+            case BACK:
+                back();
+                break;
         }
         return wantToQuit;
     }
@@ -130,7 +136,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around in a dense woods.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -169,16 +175,50 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
+        
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("That way is blocked!");
         }
         else {
+            lastRoom = currentRoom;
+            multiLastRooms.push (lastRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
     }
-
+    /**
+     * Added a method that allows you to go to the room right before the current room.
+     * Commented out because I solved it in a better way that lets you go back multiple rooms
+     
+    private void back()
+    {
+        if (lastRoom == null)
+        System.out.println("You haven't gone anywhere yet!");
+        else {
+            currentRoom = lastRoom;
+            System.out.println(currentRoom.getLongDescription());
+        }
+    }
+    */
+    
+   
+    /**
+     * Added this method that uses a stack 
+     */
+    private void back()
+    {
+        if (multiLastRooms.empty())
+        {
+            System.out.println("Well you wouldn't be lost if you could remember where you were before this...");
+        }
+        
+        else
+        {
+            currentRoom = (Room) multiLastRooms.pop();
+            System.out.println("You retrace your foot steps and find your way back to where you were earlier.");
+            System.out.println(currentRoom.getLongDescription());
+        }
+    }
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
