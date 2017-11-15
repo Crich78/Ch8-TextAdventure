@@ -94,8 +94,10 @@ public class Game
         bridge.setExit("north", c1);
         bridge.setExit("south", win);
         
-        
-       
+        c3.addItem(new Item ("shiny stone", 0.1));
+        a1.addItem(new Item ("sturdy branch", 2));
+        a3.addItem(new Item("water bottle" , 0.5));
+        a3.addItem(new Item("ripped backpack" , 1));
         currentRoom = b2;  // start game outside
     }
 
@@ -123,8 +125,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("You are lost in the woods!");
+        System.out.println("The sun will go down soon and it is up to you to find your way out!");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
