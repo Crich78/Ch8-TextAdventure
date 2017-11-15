@@ -14,6 +14,8 @@ public class Item
 
     /**
      * Constructor for Item Objects
+     * @param description This is a short description of the item
+     * @param weight This is the weight of the item
      */
     public Item(String description, double weight)
     {
@@ -22,7 +24,7 @@ public class Item
     }
 
     /**
-     * Getters for weight and descriptioin
+     * Getters for weight and description
      */
     public String getDescription()
     {

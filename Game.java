@@ -1,6 +1,7 @@
 /**
- *  This is the main class in our text adventure. I will add more elements to
- *  our game and hopefully make it more interesting.
+ *  This is the main class in our text adventure. You start off lost in a dense forest. You need to find your way out before it gets dark!
+ *  This runs the game and holds the descriptions of rooms and items, as well as the code making the game actually run.
+ *  
  * @author  Connor Richardson
  * @version 2017.11.13
  */
@@ -12,6 +13,8 @@ public class Game
     private Room lastRoom;
     private Room cliff;
     private Room win;
+    private Room fail;
+    private int timer = 0;
     private Stack multiLastRooms = new Stack(); // Used a stack to remember which rooms I was in and go back in a LIFO order.
         
     /**
@@ -24,7 +27,7 @@ public class Game
     }
 
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms and link their exits together. Also link items to rooms
      */
     private void createRooms()
     {
@@ -43,7 +46,8 @@ public class Game
         outskirts = new Room("make your way out of the trees and find yourself in an open field.");
         cliff = new Room("managed to climb up the rocks to the top of the cliff. Going down, doesn't look as easy. You have to almost be out though now!");
         bridge = new Room("cross the bridge and find a small trail heading south!");
-        win = new Room(" manage to spot a road not too far off! Congratulations on finding your way out of the woods! Have a safe ride home! Thanks for playing! :)" );
+        win = new Room(" manage to spot a road not too far off! Congratulations on finding your way out of the woods! Have a safe ride home! :)" );
+        fail = new Room(" are entirely lost. It is pitch black out and there is no way that you are getting out of here tonight. I'm sorry, you LOSE.");
         
         // initialise room exits
         a1.setExit("north", outskirts);
@@ -118,6 +122,12 @@ public class Game
             finished = processCommand(command);
             if(currentRoom == win)
             {
+                finished = true;
+            }
+            if (timer > 10)
+            {
+                currentRoom = fail;
+                System.out.println(currentRoom.getLongDescription());
                 finished = true;
             }
         }
@@ -216,6 +226,7 @@ public class Game
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
+     * this also keeps track of which rooms you were into by passing the room you are in to a stack right before you leave it
      */
     private void goRoom(Command command) 
     {
@@ -237,6 +248,7 @@ public class Game
             lastRoom = currentRoom;
             multiLastRooms.push (lastRoom);
             currentRoom = nextRoom;
+            timer = timer + 1;
             System.out.println(currentRoom.getLongDescription());
         }
     }

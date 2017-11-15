@@ -14,8 +14,10 @@ import java.util.HashSet;
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.10
+ * 
+ * We added items to this so that you can find multiple items in one room!
+ * @author Connor Richardson
+ * @version 2017.11.14
  */
 
 public class Room 
