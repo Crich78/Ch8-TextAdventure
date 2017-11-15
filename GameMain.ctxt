@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=GameMain
+comment0.text=\r\n\ This\ is\ a\ main\ class\ that\ can\ run\ the\ game\!\ It\ creates\ a\ new\ game\ object\ and\ activates\ the\r\n\ play\ method\ of\ that\ game\ object.\r\n\r\n\ @author\ Connor\ Richardson\r\n\ @version\ 2017.11.14\r\n
+comment1.params=
+comment1.target=GameMain()
+comment1.text=\r\n\ The\ method\ below\ creates\ the\ game\ object\ and\ runs\ the\ play\ method\ inside\ of\ it\r\n
+numComments=2

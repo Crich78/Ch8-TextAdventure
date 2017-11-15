@@ -11,6 +11,7 @@ public class Game
     private Room currentRoom;
     private Room lastRoom;
     private Room cliff;
+    private Room win;
     private Stack multiLastRooms = new Stack(); // Used a stack to remember which rooms I was in and go back in a LIFO order.
         
     /**
@@ -27,7 +28,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room a1, a2, a3, b1, b2, b3, c1, c2, c3, bridge, outskirts, win;
+        Room a1, a2, a3, b1, b2, b3, c1, c2, c3, bridge, outskirts;
        
         // create the rooms
         a1= new Room("see a strong river flowing south to the west. The trees seem to be letting up a little to the north.");
@@ -42,7 +43,7 @@ public class Game
         outskirts = new Room("make your way out of the trees and find yourself in an open field.");
         cliff = new Room("managed to climb up the rocks to the top of the cliff. Going down, doesn't look as easy. You have to almost be out though now!");
         bridge = new Room("cross the bridge and find a small trail heading south!");
-        win = new Room(" manage to spot a road not too far off! Congratulations on finding your way out of the woods! Have a safe ride home! Thanks for playing! :)");
+        win = new Room(" manage to spot a road not too far off! Congratulations on finding your way out of the woods! Have a safe ride home! Thanks for playing! :)" );
         
         // initialise room exits
         a1.setExit("north", outskirts);
@@ -115,6 +116,10 @@ public class Game
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            if(currentRoom == win)
+            {
+                finished = true;
+            }
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
